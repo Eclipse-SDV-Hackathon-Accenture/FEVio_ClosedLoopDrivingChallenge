@@ -1,0 +1,9 @@
+car_config:
+    car_name: sem_seg
+    car_instruction_topic: semantic_camera_car_instructions 
+    sensors:
+      - config_key: fcsc
+        topic: FrontCenterSemsegCamera/Image
+        publish: true
+        algorithm: manual_drive
+        type: camera.semantic_segmentation

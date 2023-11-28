@@ -1,0 +1,13 @@
+car_config:
+    car_name: hero
+    car_instruction_topic: camera_car_instructions 
+    sensors:
+      - config_key: fcc
+        topic: FrontCenterCamera/Image
+        publish: true
+        algorithm: manual_drive
+        type: camera.rgb
+        convert_module:
+          module_name: test_conv_module
+          convert_function: image_to_msg
+          message_type_function: get_msg_type

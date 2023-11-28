@@ -1,0 +1,3 @@
+configs:
+  config_filenames: [rgb_cam.yml, ray_cast_lidar.yml, sem_seg.yml, imu.yml]
+  

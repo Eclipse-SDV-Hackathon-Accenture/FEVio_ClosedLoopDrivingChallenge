@@ -1,0 +1,9 @@
+car_config:
+    car_name: ray_cast_lidar
+    car_instruction_topic: lidar_car_instructions 
+    sensors:
+      - config_key: fcl
+        topic: FrontCenterLidar/PointCloud
+        publish: true
+        algorithm: manual_drive
+        type: lidar.ray_cast

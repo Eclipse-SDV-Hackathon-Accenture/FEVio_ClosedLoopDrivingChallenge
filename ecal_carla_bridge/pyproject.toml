@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ecal-carla-bridge"
+license = {file = "LICENSE"}
+version = "0.1.0"
+dependencies = [
+  "protobuf==3.20.0",
+  "carla",
+  "opencv-python",
+  "mediapipe",
+  "asyncio",
+  "argparse",
+  "scipy",
+  "schema==0.7.5",
+  "pyyaml",
+  "numpy==1.21.6",
+  "#ecal5",
+  "datatypes_collection @ git+https://github.com/eclipse-ecal/protobuf-datatypes-collection@main"
+]
+
+[project.scripts]
+ecal_carla_bridge = "ecal_carla_bridge.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
