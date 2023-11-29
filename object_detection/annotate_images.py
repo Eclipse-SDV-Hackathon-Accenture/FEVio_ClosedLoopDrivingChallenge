@@ -137,10 +137,10 @@ def main():
       detection_result = classifier.detector.detect_for_video(mp_image, time)
       counter = 0
       for detection in detection_result.detections:
-        if (detection.categories[0].category_name == "car" and  detection.categories[0].score > 0.17):
+        if (detection.categories[0].category_name == "car" and  detection.categories[0].score > 0.18):
             counter = counter +1
       
-      trafficjamDetected = True if counter > 10 else False
+      trafficjamDetected = True if counter > 8 else False
       #print(counter, "trafficjam=", trafficjamDetected)
 
       traficJamWarningTT.data = trafficjamDetected
