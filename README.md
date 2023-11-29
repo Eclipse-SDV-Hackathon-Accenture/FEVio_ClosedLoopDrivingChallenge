@@ -29,7 +29,7 @@ Once all the required tools are installed we can start them and generate data ou
 3. Once our simulation has cars driving around we can proceed by starting the **ecal_carla_bridge**. 
 4. After the bridge is started we can start the detection algorithm by running **annotatee_images.py in the folder object_detection
 5. Once the object detection algorithm is running we can start the ecal_foxglove_bridge
-6. Last thing to do is to run foxglove, open the connection to the foxglove bridge websocket, open a new panel and subscribe to our topics. **note** We need to make sure to enable to annotation by clicken on the 'cogwheel' on the top right corner of our camera_panel, then at annotations  tab on the left side we need to click on the 'make visable' icon. We also need to add a panel for our telltale by adding a '
+6. Last thing to do is to run foxglove, open the connection to the foxglove bridge websocket, open a new panel and subscribe to our topics. **note** We need to make sure to enable to annotation by clicken on the 'cogwheel' on the top right corner of our camera_panel, then at annotations  tab on the left side we need to click on the 'make visable' icon. We also need to add a panel for our telltale by adding a 'instrument' panel where we can trigger a 'orange' bulb when the datsa received equals to true, otherwise green.
 
 Great! If all went well we should now see the camera image from CARLA in Foxglove with the annotations over the detected cars. 
 
