@@ -134,8 +134,13 @@ def main():
       mp_image = mediapip_image_from_ros_raw_image(image)
       #print(mp_image)
       detection_result = classifier.detector.detect_for_video(mp_image, time)
+      counter = 0
       for detection in detection_result.detections:
-        print(detection.categories[0].category_name)
+        if (detection.categories[0].category_name == "car"):
+            counter = counter +1
+      
+      trafficjamDetected = True if counter > 12 else False
+      print(counter, "trafficjam=", trafficjamDetected)
 
       annotations = create_annotations(detection_result, image.header)
       pub.send(annotations)
