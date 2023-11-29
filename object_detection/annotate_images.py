@@ -46,11 +46,11 @@ import numpy as np
 def mediapip_image_from_ros_raw_image(image: ROSImage) -> mp.Image:
   # create numpy array with imagedata in uint8 to make it usable for mediapipe
   np_array = np.frombuffer(image.data, dtype=np.uint8)
-  np_array = np.reshape(np_array, newshape=(image.height, image.width, 3))
+  np_array = np.reshape(np_array, newshape=(image.height, image.width, 4))
 
   # mediapipe image created out of numpy array data
   mp_image = mp.Image(
-   image_format=mp.ImageFormat.SRGB, data=np_array
+   image_format=mp.ImageFormat.SRGBA, data=np_array
   )
   return mp_image
 
