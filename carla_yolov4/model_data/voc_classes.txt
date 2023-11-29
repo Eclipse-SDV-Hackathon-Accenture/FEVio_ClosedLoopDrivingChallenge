@@ -1,5 +1,0 @@
-vehicle
-bike
-motobike
-traffic_light
-traffic_sign
