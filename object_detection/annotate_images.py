@@ -152,7 +152,7 @@ def main():
   
 def parse_arguments():
   parser = argparse.ArgumentParser(description="Application to detect vehicles in an Image")
-  parser.add_argument("--input",  default="camera/cam_front_left")
+  parser.add_argument("--input",  default="FrontCenterCamera/Image")
   parser.add_argument('--output', default="annotations/cam_front_left")
   parser.add_argument('--output2', default="telltales/traffic_jam_detection")
   args = parser.parse_args()     
