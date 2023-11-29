@@ -25,6 +25,7 @@ import ecal.core.core as ecal_core
 from ecal.core.subscriber import ProtoSubscriber
 from ecal.core.publisher  import ProtoPublisher
 
+from ros.std_msgs.Bool_pb2 import Bool
 from ros.sensor_msgs.Image_pb2 import Image as ROSImage
 from ros.sensor_msgs.CompressedImage_pb2 import CompressedImage as ROSCompressedImage
 from ros.visualization_msgs.ImageMarker_pb2 import ImageMarker as ROSImageMarker
@@ -118,10 +119,10 @@ def main():
   # create subscriber and connect callback
   sub = ProtoSubscriber(args.input, ROSImage)
   pub = ProtoPublisher(args.output, ROSImageMarkerArray)
-  
+  Bytepub = ProtoPublisher(args.output2, Bool)
   classifier = ImageClassifier()
   last_time = 0
-
+  traficJamWarningTT = Bool()
   while ecal_core.ok():
     ret, image, time = sub.receive(500)
 
@@ -139,11 +140,13 @@ def main():
         if (detection.categories[0].category_name == "car"):
             counter = counter +1
       
-      trafficjamDetected = True if counter > 12 else False
+      trafficjamDetected = True if counter > 10 else False
       print(counter, "trafficjam=", trafficjamDetected)
-
+        
+      traficJamWarningTT.data = trafficjamDetected
       annotations = create_annotations(detection_result, image.header)
       pub.send(annotations)
+      Bytepub.send(traficJamWarningTT)
 
   ecal_core.finalize()
   
@@ -151,6 +154,7 @@ def parse_arguments():
   parser = argparse.ArgumentParser(description="Application to detect vehicles in an Image")
   parser.add_argument("--input",  default="camera/cam_front_left")
   parser.add_argument('--output', default="annotations/cam_front_left")
+  parser.add_argument('--output2', default="telltales/traffic_jam_detection")
   args = parser.parse_args()     
   return args
  
