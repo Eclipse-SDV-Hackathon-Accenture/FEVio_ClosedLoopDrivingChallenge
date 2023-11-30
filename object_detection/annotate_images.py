@@ -137,12 +137,13 @@ def main():
       detection_result = classifier.detector.detect_for_video(mp_image, time)
       counter = 0
       for detection in detection_result.detections:
+        print(detection.categories[0].score)
+        sys.stdout.flush() 
         if (detection.categories[0].category_name == "car" and  detection.categories[0].score > 0.18):
             counter = counter +1
       
       trafficjamDetected = True if counter > 8 else False
-      #print(counter, "trafficjam=", trafficjamDetected)
-
+      #print(counter,  "trafficjam=", trafficjamDetected)
       traficJamWarningTT.data = trafficjamDetected
       annotations = create_annotations(detection_result, image.header)
       pub.send(annotations)
