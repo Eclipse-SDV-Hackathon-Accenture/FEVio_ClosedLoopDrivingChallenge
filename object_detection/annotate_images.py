@@ -78,7 +78,7 @@ def create_bounding_box(detection, header) -> ROSImageMarker:
 def create_annotations(detection_result, timestamp) -> ROSImageMarkerArray:
   annotations = ROSImageMarkerArray()
   for detection in detection_result.detections:
-    if (detection.categories[0].category_name == "car"):
+    if (detection.categories[0].category_name == "car"  and  detection.categories[0].score > 0.25):
       bounding_box = create_bounding_box(detection, timestamp)
       annotations.markers.append(bounding_box)
   return annotations
@@ -109,7 +109,7 @@ def main():
   
   # print eCAL version and date
   print("eCAL {} ({})\n".format(ecal_core.getversion(),ecal_core.getdate()))
-  
+  sys.stdout.flush()
   # initialize eCAL API
   ecal_core.initialize(sys.argv, "annotate images")
   
@@ -141,6 +141,8 @@ def main():
         sys.stdout.flush() 
         if (detection.categories[0].category_name == "car" and  detection.categories[0].score > 0.18):
             counter = counter +1
+            print(detection.categories[0].score)
+            sys.stdout.flush()
       
       trafficjamDetected = True if counter > 8 else False
       #print(counter,  "trafficjam=", trafficjamDetected)
