@@ -136,7 +136,7 @@ def main():
     argparser.add_argument(
         '--hero',
         action='store_true',
-        default=False,
+        default=True,
         help='Set one of the vehicles as hero')
     argparser.add_argument(
         '--respawn',
@@ -236,26 +236,34 @@ def main():
                 driver_id = random.choice(blueprint.get_attribute('driver_id').recommended_values)
                 blueprint.set_attribute('driver_id', driver_id)
             if hero:
-                blueprint.set_attribute('role_name', 'hero')
-                hero = False
-            else:
-                blueprint.set_attribute('role_name', 'audi_a2')
+                #blueprint.set_attribute('role_name', 'hero')
+                vehicle_bp = blueprint_library.filter("vehicle.audi.a2")[0]
+                vehicle_bp.set_attribute('role_name', 'audi_a2')
                 cam_bp = blueprint_library.find('sensor.camera.rgb')
                 cam_bp.set_attribute('role_name', 'fcc')
-                cam01 = world.spawn_actor(cam_bp, carla.Transform(), attach_to=blueprint)
+                myVehicle = world.spawn_actor(vehicle_bp, transform)
+                myVehicle.set_autopilot(True)
+                camera_transform = carla.Transform(carla.Location(x=1.5, z=2.4))
+                cam01 = world.spawn_actor(cam_bp, camera_transform, attach_to=myVehicle)
+                cam01.image_size_x = 1920
+                cam01.image_size_y = 1920
+                hero = False
+                print("Hero spawned");
+                continue
+            else:
+                blueprint.set_attribute('role_name', 'vw')
+                
 
             # spawn the cars and set their autopilot and light state all together
             batch.append(SpawnActor(blueprint, transform)
                 .then(SetAutopilot(FutureActor, True, traffic_manager.get_port())))
+            
 
         for response in client.apply_batch_sync(batch, synchronous_master):
             if response.error:
                 logging.error(response.error)
             else:
                 vehicles_list.append(response.actor_id)
-        
-        for i in vehicles_list:
-            print(i)
         
         # Set automatic vehicle lights update if specified
         if args.car_lights_on:
